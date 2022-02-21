@@ -12,10 +12,11 @@ def preprocessing(lines):
     words = words.na.replace('', None)
     words = words.na.drop()
     words = words.withColumn('word', F.regexp_replace('word', r'http\S+', ''))
-    words = words.withColumn('word', F.regexp_replace('word', '@\w+', ''))
-    words = words.withColumn('word', F.regexp_replace('word', '#', ''))
-    words = words.withColumn('word', F.regexp_replace('word', 'RT', ''))
-    words = words.withColumn('word', F.regexp_replace('word', ':', ''))
+    words = words.withColumn('word', F.regexp_replace('word', "RT @[\w_]+: ", ''))
+    words = words.withColumn('word', F.regexp_replace('word', "@[\w_]+", ''))
+    words = words.withColumn('word', F.regexp_replace('word', "[&]+[a-z]+", ''))
+    words = words.withColumn('word', F.regexp_replace('word', "[ㄱ-ㅎㅏ-ㅣ.]+", ''))
+    words = words.withColumn('word', F.regexp_replace('word', r"[^가-힣0-9\s?!]", ''))
         # 기호 및 빈 문자 제거
     return words
 

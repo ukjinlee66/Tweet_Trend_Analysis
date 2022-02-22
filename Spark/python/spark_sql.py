@@ -32,7 +32,7 @@ oriCraw = spark.read.format("jdbc") \
 # - mysql에 저장할 데이터 프레임 수정
 
 if(oriCraw.count() >= 10):
-	oriCraw = spark.createDataFrame(oriCraw.tail(df.count()-1), oriCraw.schema)
+	oriCraw = spark.createDataFrame(oriCraw.tail(oriCraw.count()-1), oriCraw.schema)
 	oriCraw.union(newCraw)
 else:
 	oriCraw.union(newCraw)

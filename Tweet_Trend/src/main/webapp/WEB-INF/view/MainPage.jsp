@@ -181,7 +181,6 @@
 			xhttp.open("Post", "http://192.168.56.100:6066/v1/submissions/create", true); 
 			xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
 		    xhttp.send(myParam2);
-			console.log('works~!');
 	    },5000);
 	    //5초 후 함수 실행
 

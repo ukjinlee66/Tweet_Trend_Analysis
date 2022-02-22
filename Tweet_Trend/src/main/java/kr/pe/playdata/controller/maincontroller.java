@@ -52,41 +52,27 @@ public class maincontroller
 		JSONParser parser = new JSONParser();
 
 		FileReader reader = new FileReader("c:/json/img.json");
+		
+		//JsonObject 생성
+		JSONObject jsonObject = (JSONObject)parser.parse(reader);
 
-		JSONObject jsonObject = (JSONObject) parser.parse(reader);
-
+		//Json에 img(key)의 value가져옴
 		String img_name = (String) jsonObject.get("img");
 		
 		byte[] byteArrray = img_name.getBytes();
 		System.out.println(byteArrray);
-		
-		//byte[] decodedBytes = Base64.getMimeDecoder().decode(img_name);
-		
-		//String directory=servletContext.getRealPath("/")+"images/sample.jpg";
-		//FileUtils.writeByteArrayToFile(new File(outputFileName), decodedBytes);
-		
-		String absolutePath = new File("src/main/resources").getAbsolutePath() + "/"+"img.png";
 	    
-		FileOutputStream output = new FileOutputStream(absolutePath);
-		//System.out.println(decodedBytes);
-		//System.out.println(output);
-		;
-		//fos.write(decodedBytes);
-		//fos.close();
-		
-	    String text = "ktko"; 
-	    byte[] targetBytes = text.getBytes(); 
-	    Encoder encoder = Base64.getEncoder(); 
-	    byte[] encodedBytes = encoder.encode(targetBytes); 
 	    Decoder decoder = Base64.getDecoder(); 
-	    byte[] decodedBytes = decoder.decode(img_name.getBytes("UTF-8")); 
-	    System.out.println("인코딩 전 : " + text); 
-	    System.out.println("인코딩 text : " + new String(encodedBytes)); 
-	    System.out.println("디코딩 text : " + new String(decodedBytes));
+	    byte[] decodedBytes = decoder.decode(img_name);
+	    //System.out.println("디코딩 text : " + new String(decodedBytes));
 	    
-	    FileUtils.writeByteArrayToFile(new File("img.png"), decodedBytes);
-	    output.write(decodedBytes);
-	    output.close();
+	    //상대경로 지정
+	    String absolutePath = new File("src/main/resources/img/").getAbsolutePath()+"\\img.png";
+	    //저장위치 확인
+	    //System.out.println(absolutePath);
+	    
+	    //File 저장
+	    FileUtils.writeByteArrayToFile(new File(absolutePath), decodedBytes);
 	  
 		return "MainPage";
 	}

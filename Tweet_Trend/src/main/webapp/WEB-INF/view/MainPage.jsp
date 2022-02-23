@@ -105,7 +105,7 @@
         <h2>List</h2>
         List1<br>List2<br>List3<br>
 	<button onclick="loadDoc()">실행</button>
-	<div id="books"></div>
+	<div id="img"></div>
 	
 	<script type="text/javascript">
 	
@@ -131,7 +131,7 @@
 			console.log(data);
 			console.log(data[0]);
 			console.log(data[1]);
-			console.log(data[2]);
+			//console.log(data[1]);
 			
 			data = JSON.parse(data);
 			console.log(data[0]);
@@ -149,12 +149,9 @@
 			//server의 어떤 프로그램(url, 요청 방식, true(비동기의미))
 			//http://ip:port/getname 로 요청이라 간주
 			//자원 설정
-		  	xhttp.open("GET", "books", true);//매우 중요
-			
+		  	xhttp.open("POST", "img", true);//매우 중요
 			//실제 요청
 		  	xhttp.send();
-			
-			
 		}
 		var workerId1="";
 		var workerId2="";

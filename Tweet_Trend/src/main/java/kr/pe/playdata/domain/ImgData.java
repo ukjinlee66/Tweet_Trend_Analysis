@@ -1,5 +1,13 @@
 package kr.pe.playdata.domain;
 
-public class ImgData {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class ImgData 
+{
+	private String img;
 }

@@ -11,37 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class graphController {
-	// http://ip:port/hello
-	// http://localhost:80/hello
-	// Get - 검색
 	@GetMapping("hello")
 	public String m1() {
-		// ...
-		System.out.println("get");
-		return "get";
-	}
-
-	// Post - 수정
-	@PostMapping("hello")
-	public String m2() {
-		// ...
-		System.out.println("post");
-		return "post";
-	}
-
-	// Put - 생성
-	@PutMapping("hello")
-	public String m3() {
-		// ...
-		System.out.println("put");
-		return "put";
-	}
-
-	// Delete - 삭제
-	@DeleteMapping("hello")
-	public String m4() {
-		// ...
-		System.out.println("delete");
-		return "delete";
+		int val = (int)(Math.random()*10);
+		System.out.println(val);
+		return Integer.toString(val);
 	}
 }

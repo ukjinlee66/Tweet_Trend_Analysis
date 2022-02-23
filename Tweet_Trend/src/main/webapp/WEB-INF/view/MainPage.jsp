@@ -8,9 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tweet_Trend</title>
 <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <link href="${path}/resources/css/customize.css" rel="stylesheet" />
 </head>
 <body>
@@ -71,8 +68,8 @@
 		<div id="jb-footer">
 			<p>Copyright 2022. (IlDa.)</p>
 		</div>
-		<button id="create" onClick="loadDoc()">new</button>
-		<div id="increase">1</div>
+		<!-- <button id="create" onClick="loadDoc()">new</button>
+		<div id="increase"></div> -->
 	</div>
 	<script src="${path}/resources/js/customize.js"></script>
 	<script src="${path}/resources/js/controlSpark.js"></script>

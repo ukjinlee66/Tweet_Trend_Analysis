@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.pe.playdata.model.sentimenttbl;
-import kr.pe.playdata.service.sentimenttblService;
+import kr.pe.playdata.model.oricrawltbl;
+import kr.pe.playdata.service.oricrawltblService;
 
 @RestController
 @RequestMapping("/v1")
-public class sentimenttblController {
+public class oricrawltblController {
 	@Autowired
-	sentimenttblService sentimenttblService;
+	oricrawltblService oricrawltblService;
 	
-	@GetMapping("/sentimenttbl") 
-	public List<sentimenttbl> findAll() {
-		return sentimenttblService.findAll(); 
+	@GetMapping("/oricrawltbl") 
+	public List<oricrawltbl> findAll() {
+		return oricrawltblService.findAll(); 
 	}
 
 }

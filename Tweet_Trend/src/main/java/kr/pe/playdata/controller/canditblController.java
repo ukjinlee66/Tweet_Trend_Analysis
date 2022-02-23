@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kr.pe.playdata.model.sentimenttbl;
-import kr.pe.playdata.service.sentimenttblService;
+import kr.pe.playdata.model.canditbl;
+import kr.pe.playdata.service.canditblService;
 
 @RestController
 @RequestMapping("/v1")
-public class sentimenttblController {
+public class canditblController {
 	@Autowired
-	sentimenttblService sentimenttblService;
+	canditblService canditblService;
 	
-	@GetMapping("/sentimenttbl") 
-	public List<sentimenttbl> findAll() {
-		return sentimenttblService.findAll(); 
+	@GetMapping("/canditbl") 
+	public List<canditbl> findAll() {
+		return canditblService.findAll(); 
 	}
 
 }

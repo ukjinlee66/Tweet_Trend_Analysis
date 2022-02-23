@@ -71,6 +71,8 @@
 		<div id="jb-footer">
 			<p>Copyright 2022. (IlDa.)</p>
 		</div>
+		<button id="create" onClick="loadDoc()">new</button>
+		<div id="increase">1</div>
 	</div>
 	<script src="${path}/resources/js/customize.js"></script>
 	<script src="${path}/resources/js/controlSpark.js"></script>

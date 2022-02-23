@@ -1,4 +1,4 @@
-package kr.pe.playdata.model;
+package kr.pe.playdata.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

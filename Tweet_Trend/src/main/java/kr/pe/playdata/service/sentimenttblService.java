@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.pe.playdata.model.sentimenttbl;
+import kr.pe.playdata.domain.sentimenttbl;
 import kr.pe.playdata.repository.sentimenttblRepository;
 
 @Service

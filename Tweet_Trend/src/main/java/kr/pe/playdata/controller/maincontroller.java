@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -25,10 +26,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import kr.pe.playdata.domain.Candi;
 import kr.pe.playdata.domain.ImgData;
-import kr.pe.playdata.domain.Senti;
-import kr.pe.playdata.domain.View;
+import kr.pe.playdata.domain.canditbl;
+import kr.pe.playdata.domain.oricrawltbl;
+import kr.pe.playdata.domain.sentimenttbl;
+import kr.pe.playdata.service.canditblService;
+import kr.pe.playdata.service.oricrawltblService;
+import kr.pe.playdata.service.sentimenttblService;
+
 
 @RestController
 @EnableAsync
@@ -36,33 +41,31 @@ import kr.pe.playdata.domain.View;
 @ComponentScan(basePackages = "com.henryxi.async")
 public class maincontroller 
 {
+	@Autowired
+	canditblService canditblService;
+	
+	@Autowired
+	sentimenttblService sentimenttblService;
+	
+	@Autowired
+	oricrawltblService oricrawltblService;
 	
 	//후보자 리스트 호출
 	@GetMapping("GetCandi")
-	public List<Candi> get_candi_list()
-	{
-		List<Candi> all = new ArrayList<>();
-		for (int i=1;i<11;i++)
-			all.add(new Candi());
-		return all; // JSON 배열 형식으로 문자열 반환(JSON.parse()로 JSON 객체로 실 변환)
+	public List<canditbl> findAllCandi() {
+		return canditblService.findAll(); 
 	}
+	
 	//감성 리스트 호출.
 	@GetMapping("GetSenti")
-	public List<Senti> get_senti_list()
-	{
-		List<Senti> all = new ArrayList<>();
-		for (int i=1;i<11;i++)
-			all.add(new Senti());
-		return all; // JSON 배열 형식으로 문자열 반환(JSON.parse()로 JSON 객체로 실 변환)
+	public List<sentimenttbl> findAllSen() {
+		return sentimenttblService.findAll(); 
 	}
+	
 	//트위터 리스트 호출.
 	@GetMapping("GetView")
-	public List<View> get_view_list()
-	{
-		List<View> all = new ArrayList<>();
-		for (int i=1;i<11;i++)
-			all.add(new View());
-		return all; // JSON 배열 형식으로 문자열 반환(JSON.parse()로 JSON 객체로 실 변환)
+	public List<oricrawltbl> findAllView() {
+		return oricrawltblService.findAll(); 
 	}
 	
 	//@Async("threadPoolExecutor")

@@ -6,13 +6,10 @@ var chart = Highcharts.chart('container', {
 				// set up the updating of the chart each second
 
 				setInterval(async function() {
-					var a;
-					a = await loadDoc();
-					console.log(a);
-					a = parseInt(a);
-					chart.series[0].setData([a, Math.random(), Math.random(), Math.random(), Math.random()], true, true);
-					chart.series[1].setData([Math.random(), Math.random(), Math.random(), Math.random(), Math.random()], true, true);
-					chart.series[2].setData([Math.random(), Math.random(), Math.random(), Math.random(), Math.random()], true, true);
+					var graph_data = await loadDoc();
+					for(var i=0; i<graph_data.length; i++){
+						chart.series[i].setData([graph_data[i]["ljmcnt"], graph_data[i]["ysycnt"], graph_data[i]["acscnt"], graph_data[i]["ssjcnt"], graph_data[i]["hgycnt"]], true, true);
+					}
 				}, 1000);
 			}
 		}
@@ -55,13 +52,15 @@ loadDoc = () => {
 		const xhttp = new XMLHttpRequest();
 		xhttp.onload = () => {
 			if (xhttp.status === 200) {
-				resolve(xhttp.responseText);
+				data = xhttp.responseText;
+				data = JSON.parse(data);
+				resolve(data);
 			}
 			else {
 				reject("Error");
 			}
 		};
-		xhttp.open("GET", "hello", true);
+		xhttp.open("GET", "v1/canditbl", true);
 		xhttp.send();
 	});
 }

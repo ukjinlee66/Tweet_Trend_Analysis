@@ -71,6 +71,6 @@
 		<!-- <button id="create" onClick="loadDoc()">new</button>
 		<div id="increase"></div> -->
 	</div>
-	<script src="${path}/resources/js/customize.js"></script>
+	<script src="${path}/resources/js/customize_chart.js"></script>
 	<script src="${path}/resources/js/controlSpark.js"></script>
 </body>

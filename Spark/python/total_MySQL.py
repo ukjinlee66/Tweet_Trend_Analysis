@@ -17,6 +17,41 @@ from pyspark import SparkContext, SparkConf, SQLContext
 from pyspark.sql.functions import *
 from pyspark.sql.types import *
 
+# SQL 설정
+database = "TTA"
+user = "root"
+password  = "1234"
+conf = SparkConf() \
+    .setAppName("spark-sql") \
+    .set("spark.driver.extraClassPath","./jars/mysql-connector-java-5.1.38.bin.jar")
+sc = SparkContext.getOrCreate(conf=conf)
+sqlContext = SQLContext(sc)
+spark = sqlContext.sparkSession
+
+# 트위터 크롤링(원본) 데이터 불러오기
+# twittertbl는 content라는 컬럼 1개만 존재!
+# 요구요구사항 데이터프레임에 전처리한 컬럼 추가해주시면 됩니다!
+twittertbl = spark.read.format("jdbc") \
+    .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+    .option("dbtable", "twittertbl") \
+    .option("user", user) \
+    .option("password", password) \
+    .option("driver", "com.mysql.jdbc.Driver") \
+    .load()
+
+# 트위터 크롤링 테이블 형식의 빈 데이터 프레임 생성
+schema = StructType([StructField("content", StringType(), True)])
+emptyTwittertbl = spark.createDataFrame([], schema)
+
+# 트위터 크롤링 테이블 초기화
+emptyTwittertbl.write.format("jdbc") \
+    .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+    .option("dbtable", "twittertbl") \
+    .option("user", user) \
+    .option("password", password) \
+    .option("driver", "com.mysql.jdbc.Driver") \
+    .mode("overwrite").save()
+
 # pytorch 에서 cpu 사용 선택 
 device = torch.device("cpu")
 
@@ -134,30 +169,12 @@ def predict(predict_sentence):
 
         return test_eval[0]
 
-# SQL 설정
-database = "TTA"
-user = "root"
-password  = "1234"
-conf = SparkConf() \
-    .setAppName("spark-sql") \
-    .set("spark.driver.extraClassPath","./jars/mysql-connector-java-5.1.38.bin.jar")
-sc = SparkContext.getOrCreate(conf=conf)
-sqlContext = SQLContext(sc)
-spark = sqlContext.sparkSession
 
 predict_udf = udf(predict)
 
-# 트위터 크롤링(원본, 전처리 후 문장) 데이터 불러오기
-twittertbl = spark.read.format("jdbc") \
-    .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-    .option("dbtable", "twittertbl") \
-    .option("user", user) \
-    .option("password", password) \
-    .option("driver", "com.mysql.jdbc.Driver") \
-    .load()
-
 # 원본 크롤링 데이터와 감성 연결
-oricrawlDF = twittertbl.withColumn("sentiment", predict_udf("word"))
+# OriginDf = 위의 트위터크롤링 테이블에 전처리 컬럼 추가된 DF 
+oricrawlDF = OriginDf.withColumn("sentiment", predict_udf("content"))
 
 # 후보자 별 감성 개수 및 candidate DB 최신화
 LJMcnt = oricrawlDF.where(col("content").like("%이재명%"))

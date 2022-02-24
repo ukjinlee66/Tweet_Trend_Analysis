@@ -5,10 +5,10 @@ from tweepy import OAuthHandler
 import socket
 import json
 
-consumer_key='dXKgrOLsyjhwJinCx7DDxrjY5'
-consumer_secret='WjF9lkBjS18vrGVrQ2MwjdvfOqGcFkNltljyJ0KKwKsStpGviI'
-access_token ='998580368-fUKT0QxJ591CLKTPlEb6lPnoqNBD7QzuRWwxbEec'
-access_secret='EkP7zkbg1i0qVk85YwbIeLuD9ecQr1GQHvBEWedyV5lCY'
+consumer_key=''
+consumer_secret=''
+access_token =''
+access_secret=''
 
 class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
   # tweet object listens for the tweets

@@ -4,9 +4,9 @@ var chart = Highcharts.chart('container', {
 		events: {
 			load: function() {
 				// set up the updating of the chart each second
-
 				setInterval(async function() {
 					var graph_data = await loadDoc();
+					console.log(graph_data);
 					for(var i=0; i<graph_data.length; i++){
 						chart.series[i].setData([graph_data[i]["ljmcnt"], graph_data[i]["ysycnt"], graph_data[i]["acscnt"], graph_data[i]["ssjcnt"], graph_data[i]["hgycnt"]], true, true);
 					}

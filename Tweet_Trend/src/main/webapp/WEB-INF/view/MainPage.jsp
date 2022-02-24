@@ -13,36 +13,35 @@
 <body>
 	<div id="jb-container">
 		<img src="img/logo2.png" width="10%" height="10%">
+		<button onclick="tweetOn()">서버 ON</button>
+		<button onclick="tweetOff()">서버 OFF</button>
 		<div id="jb-header">
 			<div class="mybox" align="center">
 				<font size="5">대선</font>
+				<span></span>
 			</div>
 			<div class="mybox" align="center">
 				<font size="5">긍정</font>
+				<span id="positive"></span>
 			</div>
 			<div class="mybox" align="center">
 				<font size="5">중립</font>
+				<span id="neutrality"></span>
 			</div>
 			<div class="mybox" align="center">
 				<font size="5">부정</font>
+				<span id="negative"></span>
 			</div>
 			<div class="mybox" align="center">
 				<font size="5">총 데이터 수</font>
+				<span id="total"></span>
 			</div>
 		</div>
 		<div id="jb-content">
-			<h2>List</h2>
-			List1<br>List2<br>List3<br>
-			<button onclick="tweetOn()">서버 ON</button>
-			<button onclick="tweetOff()">서버 OFF</button>
-			<div id="books"></div>
-
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet.
-				Proin gravida velit dictum dui consequat malesuada. Aenean et nibh
-				eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet
-				ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio
-				pretium, sollicitudin sapien eget, adipiscing risus.</p>
+			<h3>List</h3>
+			<hr>
+			<div id="parent">
+			</div>
 		</div>
 		<div id="jb-sidebar">
 			<h2>ìë í´ë¼ì°ë ìëasdasd¦¬</h2>
@@ -71,6 +70,8 @@
 		<!-- <button id="create" onClick="loadDoc()">new</button>
 		<div id="increase"></div> -->
 	</div>
+	<script src="${path}/resources/js/statistic_count.js"></script>
 	<script src="${path}/resources/js/customize_chart.js"></script>
+	<script src="${path}/resources/js/original_content.js"></script>
 	<script src="${path}/resources/js/controlSpark.js"></script>
 </body>

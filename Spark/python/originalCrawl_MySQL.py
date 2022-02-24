@@ -16,6 +16,7 @@ sc = SparkContext.getOrCreate(conf=conf)
 sqlContext = SQLContext(sc)
 spark = sqlContext.sparkSession
 
+
 # 새로운 크롤링정보 dataframe으로 생성
 newCrawl = spark.createDataFrame([
         (crawling_content, content_sentiment)
@@ -29,7 +30,6 @@ table = "oriCrawlTbl"
 user = "root"
 password  = "1234"
 
-# mysql 기존 테이블 데이터 프레임으로 import
 oriCrawlTbl = spark.read.format("jdbc") \
     .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
     .option("dbtable", table) \

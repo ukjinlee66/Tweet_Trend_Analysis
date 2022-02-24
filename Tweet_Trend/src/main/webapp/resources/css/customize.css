@@ -46,8 +46,11 @@
 
 
 /* MainPage */
+#jb-main{
+	margin: 10px 10px 10px 10px;
+}
+
 #jb-container {
-	width: 940px;
 	margin: 10px auto;
 	padding: 20px;
 	border: 1px solid #bcbcbc;

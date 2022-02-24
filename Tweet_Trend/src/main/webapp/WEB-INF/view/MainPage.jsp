@@ -83,7 +83,7 @@
   <body>
   
     <div id="jb-container">
-      <img src="img/logo2.png" width="10%" height="10%">
+      <img src="img/test_image.png" width="10%" height="10%">
       <div id="jb-header">
         	<div class="mybox" align="center" >
         		<font size="6" >

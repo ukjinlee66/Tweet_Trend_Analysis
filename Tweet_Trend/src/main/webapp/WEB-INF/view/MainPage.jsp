@@ -120,7 +120,28 @@
 		<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark"
 			aria-label="First navbar example">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#"><img src="img/logo2.png" width="5%" height="5%"></a>
+				<a class="navbar-brand" href="#"> <img src="img/logo2.png"
+					width="5%" height="5%">
+					<div
+						class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+						<h1 class="h2">Dashboard</h1>
+						<div
+							class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+							id="positive" align="center" style="background-color: #0d6efd;"></div>
+						<div
+							class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+							id="neutrality" align="center" style="background-color: #adb5bd;"></div>
+						<div
+							class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+							id="negative" align="center" style="background-color: #dc3545;">
+							</span>
+						</div>
+						<div
+							class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+							id="total" align="center" style="background-color: #ffc107;"></div>
+						<div class="btn-toolbar mb-2 mb-md-0"></div>
+					</div>
+				</a>
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 					<button type="button" class="btn btn-sm btn-outline-secondary">서버
 						ON</button>
@@ -130,28 +151,13 @@
 			</div>
 		</nav>
 		<div id="main">
-			<div
-				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-				<h1 class="h2">Dashboard</h1>
-				<div
-					class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-					id="positive" align="center" style="background-color: #0d6efd;"></div>
-				<div
-					class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-					id="neutrality" align="center" style="background-color: #adb5bd;"></div>
-				<div
-					class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-					id="negative" align="center" style="background-color: #dc3545;"></span></div>
-				<div
-					class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-					id="total" align="center" style="background-color: #ffc107;"></div>
-				<div class="btn-toolbar mb-2 mb-md-0"></div>
-			</div>
+
 			<div class="row mb-2">
 				<div class="col-md-6">
 					<div
 						class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-						<div id="twitter_table" class="my-3 p-3 bg-body rounded shadow-sm" style="width:100%">
+						<div id="twitter_table" class="my-3 p-3 bg-body rounded shadow-sm"
+							style="width: 100%">
 							<div
 								class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
 								style="background-color: #1da1f2">
@@ -175,7 +181,9 @@
 					</div>
 					<div
 						class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-						wordcloud</div>
+						<img id="wordcloud" src="img/wordcloud.png"
+							style="width: 100%; height: 500px">
+					</div>
 				</div>
 			</div>
 		</div>

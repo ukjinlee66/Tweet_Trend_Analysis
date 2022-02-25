@@ -29,11 +29,19 @@ function createDIV(content, sentiment) {
 								</p>
 							</div>`
 	child_len = obj.childElementCount
-	if(child_len>5){
-		obj.removeChild(obj.childNodes[5]);
+	if(child_len>10){
+		obj.removeChild(obj.childNodes[9]);
 	}
-	obj.insertBefore(newDiv,obj.childNodes[0]);
-	console.log(obj.childNodes[0].innerHTML);
+	if(obj.childNodes[0]!=undefined){
+		if(obj.childNodes[0].innerHTML!==content){
+			console.log(obj.childNodes[0].innerHTML);
+			console.log(content);
+			obj.insertBefore(newDiv,obj.childNodes[0]);
+		}
+	}
+	else{
+		obj.insertBefore(newDiv,obj.childNodes[0]);
+	}
 }
 
 loadList = () => {

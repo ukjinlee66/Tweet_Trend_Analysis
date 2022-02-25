@@ -37,13 +37,13 @@ var chart = Highcharts.chart('container', {
 	},
 	series: [{
 		name: '긍정',
-		data: [3, 3, 4, 7, 2]
+		data: [0, 0, 0, 0, 0]
 	}, {
 		name: '중립',
-		data: [2, 2, 3, 2, 1]
+		data: [0, 0, 0, 0, 0]
 	}, {
 		name: '부정',
-		data: [3, 4, 4, 2, 5]
+		data: [0, 0, 0, 0, 0]
 	}]
 });
 

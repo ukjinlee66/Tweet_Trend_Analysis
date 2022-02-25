@@ -10,15 +10,30 @@ window.onload = function() {
 function createDIV(content, sentiment) {
 	obj = document.getElementById("parent");
 	newDiv = document.createElement("div");
-	newDiv.innerHTML = content+","+sentiment;
-	newDiv.setAttribute("id", "myDiv"); // 새롭게 만들어지는 div 태그에 id 값 저장
-	newDiv.style.backgroundColor = "grey";
-
+	console.log(sentiment);
+	back_color = "#007bff";
+	if(sentiment==="중립"){
+		back_color = "#adb5bd";
+	}
+	else if(sentiment==="부정"){
+		back_color = "#dc3545";
+	}
+	newDiv.innerHTML = `<div class="d-flex text-muted pt-3">
+								<svg class="bd-placeholder-img flex-shrink-0 me-2 rounded"
+									width="32" height="32" xmlns="http://www.w3.org/2000/svg"
+									role="img" aria-label="Placeholder: 32x32"
+									preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%"
+										fill="${back_color}"/></svg>
+								<p class="pb-3 mb-0 small lh-sm border-bottom">
+									<strong class="d-block text-gray-dark">@username</strong>${content}
+								</p>
+							</div>`
 	child_len = obj.childElementCount
 	if(child_len>5){
 		obj.removeChild(obj.childNodes[5]);
 	}
 	obj.insertBefore(newDiv,obj.childNodes[0]);
+	console.log(obj.childNodes[0].innerHTML);
 }
 
 loadList = () => {

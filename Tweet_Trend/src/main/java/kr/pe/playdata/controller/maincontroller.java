@@ -30,7 +30,7 @@ public class maincontroller
 		    byte[] ss = DatatypeConverter.parseBase64Binary(img_name);
 		    BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(ss));
 		    System.out.println(bufImg);
-		    ImageIO.write(bufImg, "png", new File("src/main/resources/img/sksda.png"));
+		    ImageIO.write(bufImg, "png", new File("src/main/resources/img/wordcloud.png"));
 		}
 		catch (Exception e)
 		{

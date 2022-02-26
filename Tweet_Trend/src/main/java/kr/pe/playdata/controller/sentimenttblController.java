@@ -24,10 +24,4 @@ public class sentimenttblController {
 		List<sentimenttbl> list = sentimenttblService.findAll(sort);
 		return list;
 	}
-	
-//	@GetMapping("/sentimenttblSorted")
-//	public List<sentimenttbl> findAllSorted() {
-//		return sentimenttblService.findAllSorted(); 
-//	}
-
 }

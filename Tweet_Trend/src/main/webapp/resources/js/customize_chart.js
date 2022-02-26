@@ -8,7 +8,7 @@ var chart = Highcharts.chart('container', {
 					var graph_data = await loadDoc();
 					console.log(graph_data);
 					for(var i=0; i<graph_data.length; i++){
-						chart.series[i].setData([graph_data[i]["ljmcnt"], graph_data[i]["ysycnt"], graph_data[i]["acscnt"], graph_data[i]["ssjcnt"], graph_data[i]["hgycnt"]], true, true);
+						chart.series[i].setData([graph_data[i]["ljmcnt"], graph_data[i]["ysycnt"], graph_data[i]["acscnt"], graph_data[i]["ssjcnt"]], true, true);
 					}
 				}, 1000);
 			}
@@ -18,7 +18,7 @@ var chart = Highcharts.chart('container', {
 		text: '대선 후보들에 대한 SNS 반응'
 	},
 	xAxis: {
-		categories: ['이재명', '윤석열', '안철수', '심상정', '허경영']
+		categories: ['이재명', '윤석열', '안철수', '심상정']
 	},
 	yAxis: {
 		min: 0,
@@ -37,13 +37,13 @@ var chart = Highcharts.chart('container', {
 	},
 	series: [{
 		name: '긍정',
-		data: [0, 0, 0, 0, 0]
-	}, {
-		name: '중립',
-		data: [0, 0, 0, 0, 0]
+		data: [0, 0, 0, 0]
 	}, {
 		name: '부정',
-		data: [0, 0, 0, 0, 0]
+		data: [0, 0, 0, 0]
+	}, {
+		name: '중립',
+		data: [0, 0, 0, 0]
 	}]
 });
 

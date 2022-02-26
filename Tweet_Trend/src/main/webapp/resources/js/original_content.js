@@ -13,7 +13,7 @@ function createDIV(content, sentiment) {
 	console.log(sentiment);
 	back_color = "#007bff";
 	if(sentiment==="중립"){
-		back_color = "#adb5bd";
+		back_color = "#808080";
 	}
 	else if(sentiment==="부정"){
 		back_color = "#dc3545";
@@ -32,16 +32,17 @@ function createDIV(content, sentiment) {
 	if(child_len>10){
 		obj.removeChild(obj.childNodes[9]);
 	}
-	if(obj.childNodes[0]!=undefined){
-		if(obj.childNodes[0].innerHTML!==content){
-			console.log(obj.childNodes[0].innerHTML);
-			console.log(content);
-			obj.insertBefore(newDiv,obj.childNodes[0]);
-		}
-	}
-	else{
-		obj.insertBefore(newDiv,obj.childNodes[0]);
-	}
+//	if(obj.childNodes[0]!=undefined){
+//		if(obj.childNodes[0].innerHTML!==content){
+//			console.log(obj.childNodes[0].innerHTML);
+//			console.log(content);
+//			obj.insertBefore(newDiv,obj.childNodes[0]);
+//		}
+//	}
+//	else{
+//		obj.insertBefore(newDiv,obj.childNodes[0]);
+//	}
+	obj.insertBefore(newDiv,obj.childNodes[0]);
 }
 
 loadList = () => {

@@ -30,7 +30,4 @@ public class canditbl {
 	
 	@Column(name="SSJcnt")
 	private int SSJcnt;
-	
-	@Column(name="HGYcnt")
-	private int HGYcnt;
 }

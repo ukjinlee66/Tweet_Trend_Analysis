@@ -9,5 +9,4 @@ public class Candi
 	private int		ACScnt;
 	private int		YSYcnt;
 	private int		SSJcnt;
-	private int		HGYcnt;
 }

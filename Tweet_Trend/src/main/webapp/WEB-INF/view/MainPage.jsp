@@ -46,9 +46,9 @@
 						id="total" align="center" style="background-color: #fd7e14;">총 데이터 수 : 0</div>
 				</div>
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<button type="button" class="btn btn-sm btn-outline-secondary">서버
+					<button type="button" class="btn btn-sm btn-outline-secondary" onclick="tweetOn()">서버
 						ON</button>
-					<button type="button" class="btn btn-sm btn-outline-secondary">서버
+					<button type="button" class="btn btn-sm btn-outline-secondary" onclick="tweetOff()">서버
 						OFF</button>
 				</div>
 			</div>
@@ -94,7 +94,7 @@
 		<footer class="py-3 my-4">
 			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
 			</ul>
-			<p class="text-center text-muted">&copy; 2022 Playdata, Illda</p>
+			<p class="text-center text-muted">&copy; 2022 Min-Sim</p>
 		</footer>
 	</div>
 	<script src="${path}/resources/js/customize_chart.js"></script>

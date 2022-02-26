@@ -17,11 +17,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @Controller
 public class maincontroller 
 {
 	@ApiOperation(value="Post Image요청 처리", notes= "트위터 메세지를 키워드추출하여 빈도수별로 워드클라우드이미지를 출력.")
+	@ApiResponses({
+        @ApiResponse(code = 200, message = "API 정상 작동"),
+        @ApiResponse(code = 500, message = "서버 에러")
+	})
 	@PostMapping("/img")
 	public String uploadImage(@RequestBody String data) throws IOException
 	{
@@ -33,7 +39,7 @@ public class maincontroller
 		    byte[] ss = DatatypeConverter.parseBase64Binary(img_name);
 		    BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(ss));
 		    System.out.println(bufImg);
-		    ImageIO.write(bufImg, "png", new File("src/main/resources/img/sksda.png"));
+		    ImageIO.write(bufImg, "png", new File("src/main/webapp/img/wordcloud.png"));
 		}
 		catch (Exception e)
 		{

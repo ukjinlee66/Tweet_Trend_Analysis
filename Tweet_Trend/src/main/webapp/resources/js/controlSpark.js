@@ -21,7 +21,7 @@ function tweetOn() {
 			"SPARK_ENV_LOADED": "1"
 		},
 		"action": "CreateSubmissionRequest",
-		"appArgs": ["/home/hadoop/python3/tweet.py", "80"]
+		"appArgs": ["/home/hadoop/python/tweetServer.py", "80"]
 	}
 
 	var params2 = {

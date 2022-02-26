@@ -4,6 +4,8 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 import socket
 import json
+import requests
+import base64
 
 import re
 import pandas as pd
@@ -171,17 +173,17 @@ def visualization(c_doc, c_num, stopWord):
         plt.axis("off")
         plt.savefig('savefig_default.png')
 	    ## image send spring boot ##
-	    #api = 'https://58.224.145.43:8080/img'
-	    #image_file = 'savefig_default.png'
+        api = 'http://219.241.120.18:8080/img'
+        image_file = 'savefig_default.png'
 
-	    #with open(image_file, "rb") as f:
-    	#	im_bytes = f.read()
-	    #im_b64 = base64.b64encode(im_bytes).decode("utf-8")
+        with open(image_file, "rb") as f:
+            im_bytes = f.read()
+        im_b64 = base64.b64encode(im_bytes).decode("utf-8")
 
-    	#headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-	    #payload = json.dumps({"img": im_b64})
-	    #response = requests.post(api, data=payload, headers=headers)
+        payload = json.dumps({"img": im_b64})
+        response = requests.post(api, data=payload, headers=headers)
 	    ############################
 
 
@@ -269,43 +271,14 @@ def predict(predict_sentence):
         return test_eval[0]
 
 def candiTblRenew():
-    readDFcandi = spark.read.format("jdbc") \
-        .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-        .option("dbtable", "readDF") \
-        .option("user", user) \
-        .option("password", password) \
-        .option("driver", "com.mysql.jdbc.Driver") \
-        .load()
     
-    LJMcnt = readDFcandi.where(col("content").like("%이재명%"))
-    LJMcnt = LJMcnt.groupBy("sentiment").agg(count("sentiment").alias("LJMcnt"))
-
-    ACScnt = readDFcandi.where(col("content").like("%안철수%"))
-    ACScnt = ACScnt.groupBy("sentiment").agg(count("sentiment").alias("ACScnt"))
- 
-    YSYcnt = readDFcandi.where(col("content").like("%윤석열%"))
-    YSYcnt = YSYcnt.groupBy("sentiment").agg(count("sentiment").alias("YSYcnt"))
-
-    SSJcnt = readDFcandi.where(col("content").like("%심상정%"))
-    SSJcnt = SSJcnt.groupBy("sentiment").agg(count("sentiment").alias("SSJcnt"))
-
-    canditbl = LJMcnt.join(ACScnt, ['sentiment'], 'inner')
-    canditbl = canditbl.join(YSYcnt, ['sentiment'], 'inner')
-    canditbl = canditbl.join(SSJcnt, ['sentiment'], 'inner')
- 
-    baseDFcan = spark.createDataFrame(
-        [('긍정',0,0,0,0),('부정',0,0,0,0),('중립', 0,0,0,0)],
+    canditbl = spark.createDataFrame(
+        [('긍정', LJMPoscnt, ACSPoscnt, YSYPoscnt, SSJPoscnt),
+         ('부정', LJMNegcnt, ACSNegcnt, YSYNegcnt, SSJNegcnt),
+         ('중립', LJMNeucnt, ACSNeucnt, YSYNeucnt, SSJNeucnt)],
         ['sentiment','LJMcnt','ACScnt','YSYcnt','SSJcnt']
     )
     
-    canditbl = baseDFcan.union(canditbl)
-    
-    canditbl = canditbl.groupBy("sentiment")\
-    .agg(sum("LJMcnt").alias("LJMcnt"),\
-         sum("ACScnt").alias("ACScnt"),\
-         sum("YSYcnt").alias("YSYcnt"),\
-         sum("SSJcnt").alias("SSJcnt"))\
- 
     canditbl.write.format("jdbc") \
         .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
         .option("dbtable", "canditbl") \
@@ -315,26 +288,11 @@ def candiTblRenew():
         .mode("overwrite").save()
 
 def sentiTblRenew():
-    readDFsen = spark.read.format("jdbc") \
-        .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-        .option("dbtable", "readDF") \
-        .option("user", user) \
-        .option("password", password) \
-        .option("driver", "com.mysql.jdbc.Driver") \
-        .load()
-   
-    sentimenttbl = readDFsen.groupBy("sentiment").count()
-    
-    baseDF = spark.createDataFrame(
-        [('긍정',0),('부정',0),('중립', 0)],
+    sentimenttbl = spark.createDataFrame(
+        [('긍정',senPoscnt),('부정',senNegcnt),('중립', senNeucnt)],
         ['sentiment','count']
     )
-    
-    sentimenttbl = baseDF.union(sentimenttbl)
-    
-    sentimenttbl = sentimenttbl.groupBy("sentiment")\
-    .agg(sum("count").alias("count"))
-    
+
     sentimenttbl.write.format("jdbc") \
         .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
         .option("dbtable", "sentimenttbl") \
@@ -343,25 +301,25 @@ def sentiTblRenew():
         .option("driver", "com.mysql.jdbc.Driver") \
         .mode("overwrite").save()
 
-# def oriTblRenew():
-#     readDFori = spark.read.format("jdbc") \
-#         .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-#         .option("dbtable", "readDF") \
-#         .option("user", user) \
-#         .option("password", password) \
-#         .option("driver", "com.mysql.jdbc.Driver") \
-#         .load()
+def oriTblRenew():
+    readDFori = spark.read.format("jdbc") \
+        .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+        .option("dbtable", "readDF") \
+        .option("user", user) \
+        .option("password", password) \
+        .option("driver", "com.mysql.jdbc.Driver") \
+        .load()
 
-#     if(readDFori.count() > 100):
-#         oricrawltbl = spark.createDataFrame(readDFori.tail(100), readDFori.schema)
+    if(readDFori.count() > 100):
+        oricrawltbl = spark.createDataFrame(readDFori.tail(100), readDFori.schema)
 
-#     oricrawltbl.write.format("jdbc") \
-#         .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-#         .option("dbtable", "oricrawltbl") \
-#         .option("user", user) \
-#         .option("password", password) \
-#         .option("driver", "com.mysql.jdbc.Driver") \
-#         .mode("overwrite").save() 
+    oricrawltbl.write.format("jdbc") \
+        .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+        .option("dbtable", "oricrawltbl") \
+        .option("user", user) \
+        .option("password", password) \
+        .option("driver", "com.mysql.jdbc.Driver") \
+        .mode("overwrite").save() 
 
 # pytorch 에서 cpu 사용 선택 
 device = torch.device("cpu")
@@ -419,14 +377,48 @@ sc = SparkContext.getOrCreate(conf=conf)
 sqlContext = SQLContext(sc)
 spark = sqlContext.sparkSession
 
+# sentiment Count read
+readDFsen = spark.read.format("jdbc") \
+        .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+        .option("dbtable", "sentimenttbl") \
+        .option("user", user) \
+        .option("password", password) \
+        .option("driver", "com.mysql.jdbc.Driver") \
+        .load()
+senPoscnt = readDFsen.filter(col("sentiment") == "긍정").collect()[0]['count']
+senNegcnt = readDFsen.filter(col("sentiment") == "부정").collect()[0]['count']
+senNeucnt = readDFsen.filter(col("sentiment") == "중립").collect()[0]['count']
+
+# candidate Sentiment Count read
+readDFcandi = spark.read.format("jdbc") \
+        .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+        .option("dbtable", "canditbl") \
+        .option("user", user) \
+        .option("password", password) \
+        .option("driver", "com.mysql.jdbc.Driver") \
+        .load()
+        
+LJMPoscnt = readDFcandi.filter(col("sentiment") == "긍정").collect()[0]['LJMcnt']
+LJMNegcnt = readDFcandi.filter(col("sentiment") == "부정").collect()[0]['LJMcnt']
+LJMNeucnt = readDFcandi.filter(col("sentiment") == "중립").collect()[0]['LJMcnt']
+
+ACSPoscnt = readDFcandi.filter(col("sentiment") == "긍정").collect()[0]['ACScnt']
+ACSNegcnt = readDFcandi.filter(col("sentiment") == "부정").collect()[0]['ACScnt']
+ACSNeucnt = readDFcandi.filter(col("sentiment") == "중립").collect()[0]['ACScnt']
+
+YSYPoscnt = readDFcandi.filter(col("sentiment") == "긍정").collect()[0]['YSYcnt']
+YSYNegcnt = readDFcandi.filter(col("sentiment") == "부정").collect()[0]['YSYcnt']
+YSYNeucnt = readDFcandi.filter(col("sentiment") == "중립").collect()[0]['YSYcnt']
+
+SSJPoscnt = readDFcandi.filter(col("sentiment") == "긍정").collect()[0]['SSJcnt']
+SSJNegcnt = readDFcandi.filter(col("sentiment") == "부정").collect()[0]['SSJcnt']
+SSJNeucnt = readDFcandi.filter(col("sentiment") == "중립").collect()[0]['SSJcnt']
+
+
 #kmeans
 kmeans_list=[]
 
 #원본 + 감정분석 DF
-
-#schema = StructType([StructField("content", StringType(), True)])
-#emptyTwittertbl = spark.createDataFrame([], schema)
-
 class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
   # tweet object listens for the tweets
     def __init__(self, csocket):
@@ -478,12 +470,70 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
                 )
 
                 print(msg['text'])
-      
+            
+            global senPoscnt
+            global senNegcnt
+            global senNeucnt
+            
+            # sentiment Count
+            if(sentiment == '긍정'):
+                senPoscnt += 1
+            elif(sentiment == '부정'):
+                senNegcnt += 1
+            else:
+                senNeucnt += 1
+            
+            global LJMPoscnt
+            global LJMNegcnt
+            global LJMNeucnt
+            global ACSPoscnt
+            global ACSNegcnt
+            global ACSNeucnt
+            global YSYPoscnt
+            global YSYNegcnt
+            global YSYNeucnt
+            global SSJPoscnt
+            global SSJNegcnt
+            global SSJNeucnt
+            
+            # candidate Sentiment Count
+            if('이재명' in text):
+                if(sentiment == '긍정'):
+                    LJMPoscnt += 1
+                elif(sentiment == '부정'):
+                    LJMNegcnt += 1
+                else:
+                    LJMNeucnt += 1
+            
+            if('안철수' in text):
+                if(sentiment == '긍정'):
+                    ACSPoscnt += 1
+                elif(sentiment == '부정'):
+                    ACSNegcnt += 1
+                else:
+                    ACSNeucnt += 1
+                    
+            if('윤석열' in text):
+                if(sentiment == '긍정'):
+                    YSYPoscnt += 1
+                elif(sentiment == '부정'):
+                    YSYNegcnt += 1
+                else:
+                    YSYNeucnt += 1
+                    
+            if('심상정' in text):
+                if(sentiment == '긍정'):
+                    SSJPoscnt += 1
+                elif(sentiment == '부정'):
+                    SSJNegcnt += 1
+                else:
+                    SSJNeucnt += 1
+                    
             print()
-
+            
             readDF.write.format("jdbc") \
                 .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-                .option("dbtable", "oricrawltbl") \
+                .option("dbtable", "readDF") \
                 .option("user", user) \
                 .option("password", password) \
                 .option("driver", "com.mysql.jdbc.Driver") \
@@ -493,7 +543,7 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
 
             sentiTblRenew() 
 
-            # oriTblRenew()
+            oriTblRenew()
 
             if(len(kmeans_list) > 10 ):
                 vec = vectorization(kmeans_list)

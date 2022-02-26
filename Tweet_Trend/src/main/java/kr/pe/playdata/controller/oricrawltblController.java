@@ -28,5 +28,4 @@ public class oricrawltblController {
 	public List<oricrawltbl> findAll() {
 		return oricrawltblService.findAll(); 
 	}
-
 }

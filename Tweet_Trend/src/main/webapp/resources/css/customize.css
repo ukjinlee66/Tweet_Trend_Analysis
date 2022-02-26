@@ -46,71 +46,20 @@
 
 
 /* MainPage */
-#jb-container {
-	width: 940px;
-	margin: 10px auto;
-	padding: 20px;
-	border: 1px solid #bcbcbc;
+#main{
+	margin: 10px 10px 10px 10px;
 }
 
-#jb-header {
-	padding: 10px;
-	margin-bottom: 10px;
-	vertical-align: middle;
-	text-align: center;
-	border: 1px solid #bcbcbc;
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
 }
 
-#jb-content {
-	width: 580px;
-	padding: 10px;
-	margin-bottom: 10px;
-	float: left;
-	border: 1px solid #bcbcbc;
-}
-
-#jb-sidebar {
-	width: 260px;
-	padding: 10px;
-	margin-bottom: 10px;
-	float: right;
-	border: 1px solid #bcbcbc;
-}
-
-#jb-footer {
-	clear: both;
-	padding: 10px;
-	border: 1px solid #bcbcbc;
-}
-
-@media ( max-width : 480px ) {
-	#jb-container {
-		width: auto;
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
 	}
-	#jb-content {
-		float: none;
-		width: auto;
-	}
-	#jb-sidebar {
-		float: none;
-		width: auto;
-	}
-}
-
-.mybox {
-	border: 1.5px solid;
-	padding: 10px;
-	border-radius: 5px;
-	width: 170px;
-	height: 60px;
-	background-color: #EBEBEB;
-	font-family: Nanum Gothic;
-	display: inline-block;
-	width: 17%;
-}
-
-@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
-.jm-font {
-	font-family: 'Jeju Myeongjo', serif;
-	color: orange;
 }

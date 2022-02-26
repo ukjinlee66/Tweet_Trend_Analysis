@@ -84,7 +84,7 @@ function tweetOn() {
 			xhttp.setRequestHeader("Content-type",
 				"application/json;charset=UTF-8");
 			xhttp.send(myParam2);
-		}, 5000);
+		}, 10000);
 	//5초 후 함수 실행
  
 }

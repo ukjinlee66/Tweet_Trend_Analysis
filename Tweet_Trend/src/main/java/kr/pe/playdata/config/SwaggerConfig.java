@@ -26,7 +26,7 @@ public class SwaggerConfig
 	private ApiInfo apiInfo() 
 	{
 		return new ApiInfoBuilder()
-				.title("API Doc")
+				.title("Min-Sim Swagger API Document!")
 				.description("Swagger Config ApiInfo")
 				.license("license : Min-Sim").licenseUrl("http://www.naver.com").build();
 	}

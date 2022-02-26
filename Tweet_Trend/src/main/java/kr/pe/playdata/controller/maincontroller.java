@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import io.swagger.annotations.ApiOperation;
+
 @Controller
 public class maincontroller 
 {
+	@ApiOperation(value="Post Image요청 처리", notes= "트위터 메세지를 키워드추출하여 빈도수별로 워드클라우드이미지를 출력.")
 	@PostMapping("/img")
 	public String uploadImage(@RequestBody String data) throws IOException
 	{
@@ -38,6 +41,8 @@ public class maincontroller
 		}
 	    return "ImageUpload Success!";
 	}
+	
+	@ApiOperation(value="Main Controller", notes= "MainPage.jsp를 호출")
 	@GetMapping("/")
 	public String mainPage(Model model) 
 	{

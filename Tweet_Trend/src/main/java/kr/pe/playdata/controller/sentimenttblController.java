@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import kr.pe.playdata.model.canditbl;
 import kr.pe.playdata.model.sentimenttbl;
 import kr.pe.playdata.service.sentimenttblService;
@@ -18,6 +19,7 @@ public class sentimenttblController {
 	@Autowired
 	sentimenttblService sentimenttblService;
 	
+	@ApiOperation(value="KoBERT Model의 감성결과 정렬", notes= "감성데이터를 정렬 및 호출")
 	@GetMapping("/sentimenttbl") 
 	public List<sentimenttbl> findAllSorted() {
 		Sort sort = Sort.by(Sort.Direction.ASC, "sentiment");

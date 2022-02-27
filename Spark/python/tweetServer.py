@@ -35,7 +35,7 @@ from transformers import AdamW
 from transformers.optimization import get_cosine_schedule_with_warmup
 
 from pyspark import SparkContext, SparkConf, SQLContext
-from pyspark.sql.functions import *
+from pyspark.sql.functions import col
 from pyspark.sql.types import *
 
 
@@ -171,10 +171,10 @@ def visualization(c_doc, c_num, stopWord):
         plt.figure()
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
-        plt.savefig('savefig_default.png')
+        plt.savefig('/home/hadoop/python/savefig_default.png')
 	    ## image send spring boot ##
         api = 'http://219.241.120.18:8080/img'
-        image_file = 'savefig_default.png'
+        image_file = '/home/hadoop/python/savefig_default.png'
 
         with open(image_file, "rb") as f:
             im_bytes = f.read()
@@ -310,16 +310,24 @@ def oriTblRenew():
         .option("driver", "com.mysql.jdbc.Driver") \
         .load()
 
-    if(readDFori.count() > 100):
-        oricrawltbl = spark.createDataFrame(readDFori.tail(100), readDFori.schema)
+    if(readDFori.count() > 1):
+        oricrawltbl2 = spark.createDataFrame(readDFori.tail(1), readDFori.schema)
+        oricrawltbl2.write.format("jdbc") \
+            .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+            .option("dbtable", "oricrawltbl") \
+            .option("user", user) \
+            .option("password", password) \
+            .option("driver", "com.mysql.jdbc.Driver") \
+            .mode("overwrite").save()
 
-    oricrawltbl.write.format("jdbc") \
-        .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-        .option("dbtable", "oricrawltbl") \
-        .option("user", user) \
-        .option("password", password) \
-        .option("driver", "com.mysql.jdbc.Driver") \
-        .mode("overwrite").save() 
+    else:
+        readDFori.write.format("jdbc") \
+            .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
+            .option("dbtable", "oricrawltbl") \
+            .option("user", user) \
+            .option("password", password) \
+            .option("driver", "com.mysql.jdbc.Driver") \
+            .mode("overwrite").save() 
 
 # pytorch 에서 cpu 사용 선택 
 device = torch.device("cpu")
@@ -497,7 +505,7 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
             global SSJNeucnt
             
             # candidate Sentiment Count
-            if('이재명' in text):
+            if('재명' in text):
                 if(sentiment == '긍정'):
                     LJMPoscnt += 1
                 elif(sentiment == '부정'):
@@ -505,7 +513,7 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
                 else:
                     LJMNeucnt += 1
             
-            if('안철수' in text):
+            if('철수' in text):
                 if(sentiment == '긍정'):
                     ACSPoscnt += 1
                 elif(sentiment == '부정'):
@@ -513,7 +521,7 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
                 else:
                     ACSNeucnt += 1
                     
-            if('윤석열' in text):
+            if('석열' in text):
                 if(sentiment == '긍정'):
                     YSYPoscnt += 1
                 elif(sentiment == '부정'):
@@ -521,7 +529,7 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
                 else:
                     YSYNeucnt += 1
                     
-            if('심상정' in text):
+            if('상정' in text):
                 if(sentiment == '긍정'):
                     SSJPoscnt += 1
                 elif(sentiment == '부정'):
@@ -533,17 +541,17 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
             
             readDF.write.format("jdbc") \
                 .option("url", "jdbc:mysql://localhost:3306/{}?serverTimezone=Asia/Seoul".format(database)) \
-                .option("dbtable", "readDF") \
+                .option("dbtable", "oricrawltbl") \
                 .option("user", user) \
                 .option("password", password) \
                 .option("driver", "com.mysql.jdbc.Driver") \
-                .mode("append").save()  
+                .mode("overwrite").save()  
 
             candiTblRenew()
 
             sentiTblRenew() 
 
-            oriTblRenew()
+            # oriTblRenew()
 
             if(len(kmeans_list) > 10 ):
                 vec = vectorization(kmeans_list)

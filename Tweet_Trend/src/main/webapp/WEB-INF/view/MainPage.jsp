@@ -97,6 +97,7 @@
 			<p class="text-center text-muted">&copy; 2022 Min-Sim</p>
 		</footer>
 	</div>
+	<script src="${path}/resources/js/jquery-3.6.0.min.js"></script>
 	<script src="${path}/resources/js/customize_chart.js"></script>
 	<script src="${path}/resources/js/statistic_count.js"></script>
 	<script src="${path}/resources/js/original_content.js"></script>

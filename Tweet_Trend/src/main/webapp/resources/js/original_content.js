@@ -1,12 +1,15 @@
-window.onload = function() {
-	setInterval(async function() {
+window.onload = function() 
+{
+	setInterval(async function() 
+	{
 		var list_data = await loadList();
 		var idx = list_data.length-1;
 		createDIV(list_data[idx]["content"],list_data[idx]["sentiment"],idx);
 	}, 1000);
 };
 
-function createDIV(content, sentiment) {
+function createDIV(content, sentiment) 
+{
 	obj = document.getElementById("parent");
 	newDiv = document.createElement("div");
 	console.log(sentiment);
@@ -28,15 +31,19 @@ function createDIV(content, sentiment) {
 							</p>
 						</div>`
 	child_len = obj.childElementCount
-	if(child_len>10){
+	if(child_len>10)
+	{
 		obj.removeChild(obj.childNodes[9]);
 	}
-	if(obj.childNodes[0]!=undefined){
-		if(obj.childNodes[0].innerHTML!==newDiv.innerHTML){
+	if(obj.childNodes[0]!=undefined)
+	{
+		if(obj.childNodes[0].innerHTML!==newDiv.innerHTML)
+		{
 			obj.insertBefore(newDiv,obj.childNodes[0]);
 		}
 	}
-	else{
+	else
+	{
 		obj.insertBefore(newDiv,obj.childNodes[0]);
 	}
 }

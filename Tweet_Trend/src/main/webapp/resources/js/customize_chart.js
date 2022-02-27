@@ -6,10 +6,9 @@ var chart = Highcharts.chart('container', {
 				// set up the updating of the chart each second
 				setInterval(async function() {
 					var graph_data = await loadDoc();
-					console.log(graph_data);
-					for(var i=0; i<graph_data.length; i++){
-						chart.series[i].setData([graph_data[i]["ljmcnt"], graph_data[i]["ysycnt"], graph_data[i]["acscnt"], graph_data[i]["ssjcnt"]], true, true);
-					}
+					chart.series[0].setData([graph_data[0]["ljmcnt"], graph_data[0]["ysycnt"], graph_data[0]["acscnt"], graph_data[0]["ssjcnt"]], true, true);
+					chart.series[1].setData([graph_data[2]["ljmcnt"], graph_data[2]["ysycnt"], graph_data[2]["acscnt"], graph_data[2]["ssjcnt"]], true, true);
+					chart.series[2].setData([graph_data[1]["ljmcnt"], graph_data[1]["ysycnt"], graph_data[1]["acscnt"], graph_data[1]["ssjcnt"]], true, true);
 				}, 1000);
 			}
 		}
@@ -35,14 +34,15 @@ var chart = Highcharts.chart('container', {
 			stacking: 'percent'
 		}
 	},
+	colors: ['#007bff', '#808080', '#dc3545'],
 	series: [{
 		name: '긍정',
 		data: [0, 0, 0, 0]
 	}, {
-		name: '부정',
+		name: '중립',
 		data: [0, 0, 0, 0]
 	}, {
-		name: '중립',
+		name: '부정',
 		data: [0, 0, 0, 0]
 	}]
 });

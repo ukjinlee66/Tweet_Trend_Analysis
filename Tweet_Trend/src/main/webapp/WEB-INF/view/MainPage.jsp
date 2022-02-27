@@ -10,6 +10,8 @@
 <link href="${path}/resources/css/customize.css" rel="stylesheet" />
 <link href="${path}/resources/css/offcanvas.css" rel="stylesheet" />
 <link href="${path}/resources/css/navbar.css" rel="stylesheet" />
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tweet_Trend</title>
 
@@ -49,8 +51,9 @@
 						데이터 수 : 0</div>
 				</div>
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<button id="button" type="button" class="btn btn-sm btn-outline-secondary"
-						onclick="tweetOn()">서버 ON</button>
+					<button id="button" type="button"
+						class="btn btn-sm btn-outline-secondary" onclick="tweetOn()">서버
+						ON</button>
 				</div>
 			</div>
 		</nav>
@@ -99,7 +102,7 @@
 				<a href="/"
 					class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
 					<img src="img/logo2.png" class="bi" width="100" height="100">
-					<use xlink:href="#bootstrap"/>
+					<use xlink:href="#bootstrap" />
 				</a> <span class="text-muted">&copy; 2022 Min-Sim</span>
 			</div>
 
@@ -116,12 +119,18 @@
 			</ul>
 		</footer>
 	</div>
-	<script src="${path}/resources/js/jquery-3.6.0.min.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-3.2.0.min.js"></script>
 	<script src="${path}/resources/js/customize_chart.js"></script>
 	<script src="${path}/resources/js/statistic_count.js"></script>
 	<script src="${path}/resources/js/original_content.js"></script>
 	<script src="${path}/resources/js/controlSpark.js"></script>
 	<script src="${path}/resources/js/image_load.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script
+		src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </body>
 </html>
 

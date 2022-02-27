@@ -1,12 +1,15 @@
-window.onload = function() {
-	setInterval(async function() {
+window.onload = function() 
+{
+	setInterval(async function() 
+	{
 		var list_data = await loadList();
 		var idx = list_data.length - 1;
 		createDIV(list_data[idx]["content"], list_data[idx]["sentiment"], idx);
 	}, 1000);
 };
 
-function createDIV(content, sentiment) {
+function createDIV(content, sentiment) 
+{
 	obj = document.getElementById("parent");
 	newDiv = document.createElement("div");
 	back_color = "#007bff";

@@ -2,12 +2,15 @@ var workerId1 = "";
 var workerId2 = "";
 
 function tweetOn() {
-
+	btn = document.getElementById("button");
+	btn.innerHTML = "서버 OFF";
+	btn.setAttribute("onclick","tweetOff();");
+	
 	var params1 = {
-		"appResource": "file:/home/hadoop/python3/tweet.py",
+		"appResource": "file:/home/hadoop/python/tweetServer.py",
 		"sparkProperties": {
 			"spark.executor.memory": "1g",
-			"spark.master": "spark://192.168.56.100:7077",
+			"spark.master": "spark://34.64.240.227:7077",
 			"spark.driver.memory": "1g",
 			"spark.driver.cores": "1",
 			"spark.eventLog.enabled": "false",
@@ -21,14 +24,14 @@ function tweetOn() {
 			"SPARK_ENV_LOADED": "1"
 		},
 		"action": "CreateSubmissionRequest",
-		"appArgs": ["/home/hadoop/python3/tweet.py", "80"]
+		"appArgs": ["/home/hadoop/python/tweetServer.py", "80"]
 	}
 
 	var params2 = {
-		"appResource": "file:/home/hadoop/python3/senti.py",
+		"appResource": "file:/home/hadoop/python/sentiment_analysis.py",
 		"sparkProperties": {
 			"spark.executor.memory": "1g",
-			"spark.master": "spark://192.168.56.100:7077",
+			"spark.master": "spark://34.64.240.227:7077",
 			"spark.driver.memory": "1g",
 			"spark.driver.cores": "1",
 			"spark.eventLog.enabled": "false",
@@ -42,7 +45,7 @@ function tweetOn() {
 			"SPARK_ENV_LOADED": "1"
 		},
 		"action": "CreateSubmissionRequest",
-		"appArgs": ["/home/hadoop/python3/senti.py", "80"]
+		"appArgs": ["/home/hadoop/python/sentiment_analysis.py", "80"]
 	}
 
 	var myParam1 = JSON.stringify(params1);
@@ -68,7 +71,7 @@ function tweetOn() {
 	console.log(myParam1);
 
 	xhttp.open("Post",
-		"http://192.168.56.100:6066/v1/submissions/create",
+		"http://34.64.240.227:6066/v1/submissions/create",
 		true);
 	xhttp.setRequestHeader("Content-type",
 		"application/json;charset=UTF-8");
@@ -79,20 +82,21 @@ function tweetOn() {
 			xhttp
 				.open(
 					"Post",
-					"http://192.168.56.100:6066/v1/submissions/create",
+					"http://34.64.240.227:6066/v1/submissions/create",
 					true);
 			xhttp.setRequestHeader("Content-type",
 				"application/json;charset=UTF-8");
 			xhttp.send(myParam2);
-		}, 5000);
-	//5초 후 함수 실행
-
-	// xhttp.open("Get", "http://34.64.240.227:6066/v1/submissions/status/driver-20220218024614-0000", true); 
-	//xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-	// xhttp.send(); 
+		}, 10000);
+	//10초 후 함수 실행
+ 
 }
 
 function tweetOff() {
+	btn = document.getElementById("button");
+	btn.innerHTML = "서버 On";
+	btn.setAttribute("onclick","tweetOn();");
+
 	const xhttp = new XMLHttpRequest();
 	xhttp.onload = function() {
 		var data = this.responseText;
@@ -100,7 +104,7 @@ function tweetOff() {
 	}
 
 	xhttp.open("Post",
-		"http://192.168.56.100:6066/v1/submissions/kill/"
+		"http://34.64.240.227:6066/v1/submissions/kill/"
 		+ workerId1, true);
 	xhttp.setRequestHeader("Content-type",
 		"application/json;charset=UTF-8");
@@ -109,11 +113,12 @@ function tweetOff() {
 
 	setTimeout(function() {
 		xhttp.open("Post",
-			"http://192.168.56.100:6066/v1/submissions/kill/"
+			"http://34.64.240.227:6066/v1/submissions/kill/"
 			+ workerId2, true);
 		xhttp.setRequestHeader("Content-type",
 			"application/json;charset=UTF-8");
 		xhttp.send();
 		console.log(workerId2 + "종료");
 	}, 3000);
+
 }

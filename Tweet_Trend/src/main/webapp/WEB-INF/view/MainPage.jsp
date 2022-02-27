@@ -1,284 +1,130 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
+	pageEncoding="UTF-8"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8">
-    <title>Tweet_Trend</title>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/exporting.js"></script>
-	<script src="https://code.highcharts.com/modules/export-data.js"></script>
-	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-	<link href="${path}/resources/css/customize.css" rel="stylesheet" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      #jb-container {
-        width: 940px;
-        margin: 10px auto;
-        padding: 20px;
-        border: 1px solid #bcbcbc;
-      }
-      #jb-header {
-        padding: 10px;
-        margin-bottom: 10px;
-        vertical-align: middle;
-    	text-align: center;
-        border: 1px solid #bcbcbc;
-      }
-      #jb-content {
-        width: 580px;
-        padding: 10px;
-        margin-bottom: 10px;
-        float: left;
-        border: 1px solid #bcbcbc;
-      }
-      #jb-sidebar {
-        width: 260px;
-        padding: 10px;
-        margin-bottom: 10px;
-        float: right;
-        border: 1px solid #bcbcbc;
-      }
-      #jb-footer {
-        clear: both;
-        padding: 10px;
-        border: 1px solid #bcbcbc;
-      }
-      @media ( max-width: 480px ) 
-      {
-        #jb-container {
-          width: auto;
-        }
-        #jb-content {
-          float: none;
-          width: auto;
-        }
-        #jb-sidebar {
-          float: none;
-          width: auto;
-        }
-      }
-    </style>
-    <style type="text/css">
-    .mybox {
-    	border:1.5px solid;
-    	padding:10px;
-    	border-radius : 5px;
-    	width : 170px;
-    	height : 60px;
-    	background-color: #EBEBEB;
-    	font-family:Nanum Gothic;
-		display: inline-block;
-    	width : 20%;
-    }
-	@import url(//fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<link href="${path}/resources/css/customize.css" rel="stylesheet" />
+<link href="${path}/resources/css/offcanvas.css" rel="stylesheet" />
+<link href="${path}/resources/css/navbar.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tweet_Trend</title>
 
-	.jm-font{
-		font-family: 'Jeju Myeongjo', serif;
-		color: orange;
-	}
-    </style>
-  </head>
-  <body>
-  
-    <div id="jb-container">
-      <img src="img/logo2.png" width="10%" height="10%">
-      <div id="jb-header">
-        	<div class="mybox" align="center" >
-        		<font size="6" >
-        			대선
-        		</font>
-        	</div>
-        	<div class="mybox" align="center">
-        	<font size="6" >
-        		긍정 / 부정
-        		</font>
-        	</div>
-        	<div class="mybox" align="center">
-        	<font size="6" >
-        		총 데이터 수 : 
-        		</font>
-        	</div>
-      </div>
-      <div id="jb-content">
-        <h2>List</h2>
-        List1<br>List2<br>List3<br>
-	<button onclick="loadDoc()">실행</button>
-	<div id="img"></div>
-	
-	<script type="text/javascript">
-	
-		function loadDoc() {
-			//요청 객체 생성
-			//기능 : 비동기로 요청하고 응답된 데이터 받을 수 있는 객체
-			//특징 : 요청중이니? 응답중인지? 응답완료? 다 파악 가능
-		  	const xhttp = new XMLHttpRequest(); // 매우중요
-			
-		  //응답이 오면 자동 실행되는 함수
-			/*	개발 형식 - 응답을 감지하는 속성에 익명함수 등록
-			*	응답이 되기는 하나 언제 정확히 몇시 몇분에 응답에 대한보장은 불가
-			*	개발 코드는 응답 오면을 기준으로 실행될수 있게 등록
-			*		- 콜백함수
-			*/
-			
-		  xhttp.onload = function() {//매우 중요
-			//f12 로 브라우저의 개발자 tool 실행후 콘솔창에서 확인 가능한 명령어
-			//server 가 응답한 데이터는 순수 문자열로 받음
-			//key(name)로 value값 활용하기 위해서는 문자열 -> JSON 객체로 변환 ()
-			
-			var data = this.reponseText; //매우 중요
-			console.log(data);
-			console.log(data[0]);
-			console.log(data[1]);
-			//console.log(data[1]);
-			
-			data = JSON.parse(data);
-			console.log(data[0]);
-			console.log(data[0].title);
-			
-			/* document : html 문서 자체를 제어하는 상위 객체
-			* getElementById("tag의 고유한 id(key)") : id 값으로 해당 tag(element)검색
-			* innerHTML : div와 p 라는 tag 내부에 html 형식을 추가 할 수 있는 속성
-			* innerTEXT : div와 p 라는 tag 내부 일반 text 추가 할 수 있는 속성
-			*/
-			
-		    //document.getElementById("books").innerHTML = data[1].title;
-		    }
-		  
-			//server의 어떤 프로그램(url, 요청 방식, true(비동기의미))
-			//http://ip:port/getname 로 요청이라 간주
-			//자원 설정
-		  	xhttp.open("POST", "img", true);//매우 중요
-			//실제 요청
-		  	xhttp.send();
-		}
-		var workerId1="";
-		var workerId2="";
-		
-		function tweetOn(){
-			
-			var params1 = { "appResource": "file:/home/hadoop/python3/tweet.py",
-					  "sparkProperties": {
-					    "spark.executor.memory": "1g",
-					    "spark.master": "spark://192.168.56.100:7077",
-					    "spark.driver.memory": "1g",
-					    "spark.driver.cores": "1",
-					    "spark.eventLog.enabled": "false",
-					    "spark.app.name": "Spark REST API - PI",
-					    "spark.submit.deployMode": "cluster",
-					    "spark.driver.supervise": "true"
-					  },
-					  "clientSparkVersion": "3.1.2",
-					  "mainClass": "org.apache.spark.deploy.SparkSubmit",
-					  "environmentVariables": {
-					    "SPARK_ENV_LOADED": "1"
-					  },
-					  "action": "CreateSubmissionRequest",
-					  "appArgs": [ "/home/hadoop/python3/tweet.py",  "80" ]}
-			
-			var params2 = { "appResource": "file:/home/hadoop/python3/senti.py",
-					  "sparkProperties": {
-					    "spark.executor.memory": "1g",
-					    "spark.master": "spark://192.168.56.100:7077",
-					    "spark.driver.memory": "1g",
-					    "spark.driver.cores": "1",
-					    "spark.eventLog.enabled": "false",
-					    "spark.app.name": "Spark REST API - PI",
-					    "spark.submit.deployMode": "cluster",
-					    "spark.driver.supervise": "true"
-					  },
-					  "clientSparkVersion": "3.1.2",
-					  "mainClass": "org.apache.spark.deploy.SparkSubmit",
-					  "environmentVariables": {
-					    "SPARK_ENV_LOADED": "1"
-					  },
-					  "action": "CreateSubmissionRequest",
-					  "appArgs": [ "/home/hadoop/python3/senti.py",  "80" ]}
-					  		  
-			
-			var myParam1 = JSON.stringify(params1);
-			var myParam2 = JSON.stringify(params2);
-			
-			const xhttp = new XMLHttpRequest(); 
-			xhttp.onload = function() {
-				
-				
-				var data = this.responseText;
-				console.log(data);
-				
-				data = JSON.parse(data);
-				console.log(data.submissionId+"실행");
-				
-				
-				if(workerId1 ==""){
-					workerId1 = data.submissionId;
-				}
-				else{
-					workerId2 = data.submissionId;
-				}
-																
-			}
-			
-			console.log(myParam1);
-			
-			xhttp.open("Post", "http://192.168.56.100:6066/v1/submissions/create", true); 
-			xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-		    xhttp.send(myParam1); 
-		
-		    
-		    setTimeout(function(){
-				xhttp.open("Post", "http://192.168.56.100:6066/v1/submissions/create", true); 
-				xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-			    xhttp.send(myParam2);
-		    },5000);
-		    //5초 후 함수 실행
-		   // xhttp.open("Get", "http://34.64.240.227:6066/v1/submissions/status/driver-20220218024614-0000", true); 
-			//xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-		   // xhttp.send(); 
-			}
-			
-			function tweetOff(){
-				const xhttp = new XMLHttpRequest(); 
-				xhttp.onload = function() {
-					var data = this.responseText;
-					console.log(data);
-				}
-					
-				xhttp.open("Post", "http://192.168.56.100:6066/v1/submissions/kill/"+workerId1, true); 
-				xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-			    xhttp.send();
-			    console.log(workerId1+"종료"); 
-			    
-			    setTimeout(function(){
-					xhttp.open("Post", "http://192.168.56.100:6066/v1/submissions/kill/"+workerId2, true); 
-					xhttp.setRequestHeader("Content-type", "application/json;charset=UTF-8");
-				    xhttp.send();
-					console.log(workerId2+"종료");
-			    },3000);														
-			}
-	</script>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean nec mollis nulla. Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. Aenean et nibh eu purus scelerisque aliquet nec non justo. Aliquam vitae aliquet ipsum. Etiam condimentum varius purus ut ultricies. Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
-      </div>
-      <div id="jb-sidebar">
-        <h2>ìë í´ë¼ì°ë ìëasdasd¦¬</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
-      </div>
-      <div id="jb-sidebar">
-        <h2>ë§ë ìë¦¬</h2>
-        <ul>
-          <li>Lorem</li>
-          <li>Ipsum</li>
-          <li>Dolor</li>
-        </ul>
-      </div>
-      <div id="jb-footer">
-        <p>Copyright 2022. (IlDa.)</p>
-      </div>
-    </div>
-  </body>
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/5.1/examples/navbars/">
+
+<!-- Bootstrap core CSS -->
+<link href="${path}/resources/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+</head>
+<body>
+	<main>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
+			aria-label="First navbar example">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#"> <img src="img/logo2.png"
+					width="150" height="150">
+				</a>
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+					<div
+						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+						id="positive" align="center" style="background-color: #0d6efd;">긍정
+						: 0</div>
+					<div
+						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+						id="neutrality" align="center" style="background-color: #808080;">중립
+						: 0</div>
+					<div
+						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+						id="negative" align="center" style="background-color: #dc3545;">부정
+						: 0</div>
+					<div
+						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+						id="total" align="center" style="background-color: #fd7e14;">총
+						데이터 수 : 0</div>
+				</div>
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<button id="button" type="button" class="btn btn-sm btn-outline-secondary"
+						onclick="tweetOn()">서버 ON</button>
+				</div>
+			</div>
+		</nav>
+		<div id="main">
+			<div class="row mb-2">
+				<div class="col-md-6">
+					<div
+						class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+						<div id="twitter_table" class="my-3 p-3 bg-body rounded shadow-sm"
+							style="width: 100%">
+							<div
+								class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
+								style="background-color: #1da1f2">
+								<img class="me-3" src="img/twitter.png" alt="twitter" width="48"
+									height="38">
+								<div class="lh-1">
+									<h1 class="h6 mb-0 text-white lh-1">Twitter</h1>
+								</div>
+							</div>
+							<h6 class="border-bottom pb-2 mb-0">Recent updates</h6>
+							<div id="parent"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div
+						class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+						<figure class="highcharts-figure" style="width: 100%">
+							<div id="container"></div>
+						</figure>
+					</div>
+					<div
+						class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+						<img id="wordcloud" src="img/wordcloud.png" alt="wordcloud"
+							style="width: 100%; height: 500px">
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<div class="container">
+		<footer
+			class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+			style="width: 100%">
+			<div class="col-md-4 d-flex align-items-center">
+				<a href="/"
+					class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+					<img src="img/logo2.png" class="bi" width="100" height="100">
+					<use xlink:href="#bootstrap"/>
+				</a> <span class="text-muted">&copy; 2022 Min-Sim</span>
+			</div>
+
+			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#twitter" /></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#instagram" /></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#facebook" /></svg></a></li>
+			</ul>
+		</footer>
+	</div>
+	<script src="${path}/resources/js/jquery-3.6.0.min.js"></script>
+	<script src="${path}/resources/js/customize_chart.js"></script>
+	<script src="${path}/resources/js/statistic_count.js"></script>
+	<script src="${path}/resources/js/original_content.js"></script>
+	<script src="${path}/resources/js/controlSpark.js"></script>
+	<script src="${path}/resources/js/image_load.js"></script>
+</body>
 </html>
+
+
+
+

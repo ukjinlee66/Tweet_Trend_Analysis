@@ -3,169 +3,55 @@ package kr.pe.playdata.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Base64.Decoder;
-import java.util.List;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.xml.bind.DatatypeConverter;
 
-import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
-import kr.pe.playdata.domain.ImgData;
-import kr.pe.playdata.domain.canditbl;
-import kr.pe.playdata.domain.oricrawltbl;
-import kr.pe.playdata.domain.sentimenttbl;
-import kr.pe.playdata.service.canditblService;
-import kr.pe.playdata.service.oricrawltblService;
-import kr.pe.playdata.service.sentimenttblService;
-
-
-@RestController
-@EnableAsync
-@EnableAutoConfiguration
-@ComponentScan(basePackages = "com.henryxi.async")
+@Controller
 public class maincontroller 
 {
-	@Autowired
-	canditblService canditblService;
-	
-	@Autowired
-	sentimenttblService sentimenttblService;
-	
-	@Autowired
-	oricrawltblService oricrawltblService;
-	
-	//후보자 리스트 호출
-	@GetMapping("GetCandi")
-	public List<canditbl> findAllCandi() {
-		return canditblService.findAll(); 
-	}
-	
-	//감성 리스트 호출.
-	@GetMapping("GetSenti")
-	public List<sentimenttbl> findAllSen() {
-		return sentimenttblService.findAll(); 
-	}
-	
-	//트위터 리스트 호출.
-	@GetMapping("GetView")
-	public List<oricrawltbl> findAllView() {
-		return oricrawltblService.findAll(); 
-	}
-	
-	//@Async("threadPoolExecutor")
+	@ApiOperation(value="Post Image요청 처리", notes= "트위터 메세지를 키워드추출하여 빈도수별로 워드클라우드이미지를 출력.")
+	@ApiResponses({
+        @ApiResponse(code = 200, message = "API 정상 작동"),
+        @ApiResponse(code = 500, message = "서버 에러")
+	})
 	@PostMapping("/img")
-	public String uploadImage(@RequestBody ImgData data) throws JsonProcessingException
+	public String uploadImage(@RequestBody String data) throws IOException
 	{
-		try {
-		ObjectMapper mapper = new ObjectMapper();
-		String reader = mapper.writeValueAsString(data);
-		byte[] imgbyte = javax.xml.bind.DatatypeConverter.parseBase64Binary(reader);
-		System.out.println(imgbyte);
-		BufferedImage img = ImageIO.read(new ByteArrayInputStream(imgbyte));
-		
-		//JsonTextParser textParser = new JsonTextParser();
-		//JsonObjectCollection root = textParser.Parse(reader) as JsonObjectCollection;
-		//decode 해주거나 아니면 spring boot가 해석.
-		//System.out.println(reader);
-		JSONParser parser = new JSONParser();
-		//JsonObject 생성
-				JSONObject jsonObject = (JSONObject)parser.parse(reader);
-
-				//Json에 img(key)의 value가져옴
-				String img_name = (String) jsonObject.get("img");
-				System.out.println(img_name);
-				byte[] byteArrray = img_name.getBytes();
-				System.out.println(byteArrray);
-			    
-			    Decoder decoder = Base64.getDecoder(); 
-			    byte[] decodedBytes = decoder.decode(imgbyte);
-			    System.out.println("디코딩 text : " + new String(decodedBytes));
-			    
-			    //상대경로 지정
-			    String absolutePath = new File("src/main/resources/img/").getAbsolutePath()+"/img.png";
-			    //저장위치 확인
-			    //System.out.println(absolutePath);
-			    
-			    //File 저장
-			    FileUtils.writeByteArrayToFile(new File(absolutePath), decodedBytes);
+		try 
+		{
+			JSONParser parser = new JSONParser();
+			JSONObject jsonObject = (JSONObject)parser.parse(data);
+			String img_name = jsonObject.get("img").toString();
+		    byte[] ss = DatatypeConverter.parseBase64Binary(img_name);
+		    BufferedImage bufImg = ImageIO.read(new ByteArrayInputStream(ss));
+		    System.out.println(bufImg);
+		    ImageIO.write(bufImg, "png", new File("src/main/webapp/img/wordcloud.png"));
 		}
 		catch (Exception e)
-		{}
-//		System.out.println(result.getImg());
-//		
-//		System.out.println("uploadImage on");
-//	    String result = "false";
-//	    FileOutputStream fos;
-//
-//	    fos = new FileOutputStream("img/word.json");
-//
-//	    // decode Base64 String to image
-//	    try
-//	    {
-//	        byte byteArray[] = Base64.getMimeDecoder().decode(image);
-//	        fos.write(byteArray);
-//
-//	        result = "true";
-//	        fos.close();
-//	    }
-//	    catch (Exception e)
-//	    {
-//	        e.printStackTrace();
-//	    }
-//	    System.out.println("uploadImage off");
-	    return "Saas"; // JSON 배열 형식으로 문자열 반환(JSON.parse()로 JSON 객체로 실 변환)
-	    //return result;
+		{
+			System.out.println(e);
+		}
+	    return "ImageUpload Success!";
 	}
+	
+	@ApiOperation(value="Main Controller", notes= "MainPage.jsp를 호출")
 	@GetMapping("/")
 	public String mainPage(Model model) 
 	{
-		
-		/*
-		 * 최신 트위터 리스트를 불러온다.
-		 */
-		
-		
-		//////////////////////////////////////
-		
-		/*
-		 * 감성 분석 결과를 불러온다.
-		 */
-		
-		//////////////////////////////////////
-		
-		/*
-		 * 총 데이터 수를 불러온다.
-		 */
-		
-		//////////////////////////////////////
-		
-		/*
-		 * 막대그래프 정보를 받아온다.
-		 */
-		
-		//////////////////////////////////////
-		
-		/*
-		 * 워드클라우드 이미지를 불러온다.
-		 */
-		
-		//////////////////////////////////////
 		return "MainPage";
 	}
 }

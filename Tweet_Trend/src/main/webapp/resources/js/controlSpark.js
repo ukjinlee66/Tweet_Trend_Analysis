@@ -2,7 +2,10 @@ var workerId1 = "";
 var workerId2 = "";
 
 function tweetOn() {
-
+	btn = document.getElementById("button");
+	btn.innerHTML = "서버 OFF";
+	btn.setAttribute("onclick","tweetOff();");
+	
 	var params1 = {
 		"appResource": "file:/home/hadoop/python/tweetServer.py",
 		"sparkProperties": {
@@ -85,11 +88,15 @@ function tweetOn() {
 				"application/json;charset=UTF-8");
 			xhttp.send(myParam2);
 		}, 10000);
-	//5초 후 함수 실행
+	//10초 후 함수 실행
  
 }
 
 function tweetOff() {
+	btn = document.getElementById("button");
+	btn.innerHTML = "서버 On";
+	btn.setAttribute("onclick","tweetOn();");
+
 	const xhttp = new XMLHttpRequest();
 	xhttp.onload = function() {
 		var data = this.responseText;
@@ -113,4 +120,5 @@ function tweetOff() {
 		xhttp.send();
 		console.log(workerId2 + "종료");
 	}, 3000);
+
 }

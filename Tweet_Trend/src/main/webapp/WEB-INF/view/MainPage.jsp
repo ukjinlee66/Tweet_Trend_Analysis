@@ -26,30 +26,31 @@
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark"
 			aria-label="First navbar example">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#"> <img
-					src="img/logo2.png" width="150" height="150">
+				<a class="navbar-brand" href="#"> <img src="img/logo2.png"
+					width="150" height="150">
 				</a>
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
 					<div
 						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-						id="positive" align="center" style="background-color: #0d6efd;">긍정 : 0</div>
+						id="positive" align="center" style="background-color: #0d6efd;">긍정
+						: 0</div>
 					<div
 						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-						id="neutrality" align="center" style="background-color: #808080;">중립 : 0</div>
+						id="neutrality" align="center" style="background-color: #808080;">중립
+						: 0</div>
 					<div
 						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-						id="negative" align="center" style="background-color: #dc3545;">부정 : 0
-					</div>
+						id="negative" align="center" style="background-color: #dc3545;">부정
+						: 0</div>
 					<div
 						class="d-flex align-items-center p-3 my-3 text-white rounded shadow-sm"
-						id="total" align="center" style="background-color: #fd7e14;">총 데이터 수 : 0</div>
+						id="total" align="center" style="background-color: #fd7e14;">총
+						데이터 수 : 0</div>
 				</div>
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<button type="button" class="btn btn-sm btn-outline-secondary" onclick="tweetOn()">서버
-						ON</button>
-					<button type="button" class="btn btn-sm btn-outline-secondary" onclick="tweetOff()">서버
-						OFF</button>
+					<button id="button" type="button" class="btn btn-sm btn-outline-secondary"
+						onclick="tweetOn()">서버 ON</button>
 				</div>
 			</div>
 		</nav>
@@ -91,10 +92,28 @@
 		</div>
 	</main>
 	<div class="container">
-		<footer class="py-3 my-4">
-			<ul class="nav justify-content-center border-bottom pb-3 mb-3">
+		<footer
+			class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
+			style="width: 100%">
+			<div class="col-md-4 d-flex align-items-center">
+				<a href="/"
+					class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+					<img src="img/logo2.png" class="bi" width="100" height="100">
+					<use xlink:href="#bootstrap"/>
+				</a> <span class="text-muted">&copy; 2022 Min-Sim</span>
+			</div>
+
+			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#twitter" /></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#instagram" /></svg></a></li>
+				<li class="ms-3"><a class="text-muted" href="#"><svg
+							class="bi" width="24" height="24">
+							<use xlink:href="#facebook" /></svg></a></li>
 			</ul>
-			<p class="text-center text-muted">&copy; 2022 Min-Sim</p>
 		</footer>
 	</div>
 	<script src="${path}/resources/js/jquery-3.6.0.min.js"></script>

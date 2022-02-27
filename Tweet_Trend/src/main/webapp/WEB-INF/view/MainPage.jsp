@@ -51,8 +51,6 @@
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 					<button id="button" type="button" class="btn btn-sm btn-outline-secondary"
 						onclick="tweetOn()">서버 ON</button>
-					<!-- <button type="button" class="btn btn-sm btn-outline-secondary"
-						onclick="tweetOff()">서버 OFF</button> -->
 				</div>
 			</div>
 		</nav>
@@ -102,7 +100,7 @@
 					class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
 					<img src="img/logo2.png" class="bi" width="100" height="100">
 					<use xlink:href="#bootstrap"/>
-				</a> <span class="text-muted">&copy; 2021 Company, Inc</span>
+				</a> <span class="text-muted">&copy; 2022 Min-Sim</span>
 			</div>
 
 			<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">

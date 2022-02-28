@@ -374,10 +374,10 @@ user = "root"
 password  = "1234"
 
 #Tweepy Api Key
-consumer_key='p3yC9Lhr2dbt5l6Izr3pXFsSR'
-consumer_secret='EccWuY7mBxZAhfpYVNpL6GeVIATSPb1pK33Y2x9PNt29y0UpYy'
-access_token ='998580368-a8MKHoBNFKWmw8ypMgddlcdpc3OzmUkzFMrk7rMH'
-access_secret='ZaAvPc02M2W7ARg9jkCYg4RRgnyv23PkwJ6YqTwcJgbHv'
+consumer_key=''
+consumer_secret=''
+access_token =''
+access_secret=''
 
 #sql setting
 conf = SparkConf() \

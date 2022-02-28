@@ -52,6 +52,7 @@ def preprocessing(readData):
 
 def preprocessing_mecab(readData):
     
+    
     #### Tokenize
     morphs = mecab.pos(readData)
 
@@ -75,6 +76,8 @@ def preprocessing_mecab(readData):
         result.append(morph[0])
     result_sentence = ' '.join(result)
     
+    result_sentence = re.sub("대선", '', result_sentence)
+
     return result_sentence	
 
 # TF-IDF를 통해 vectorizing
@@ -371,10 +374,10 @@ user = "root"
 password  = "1234"
 
 #Tweepy Api Key
-consumer_key=''
-consumer_secret=''
-access_token =''
-access_secret=''
+consumer_key='p3yC9Lhr2dbt5l6Izr3pXFsSR'
+consumer_secret='EccWuY7mBxZAhfpYVNpL6GeVIATSPb1pK33Y2x9PNt29y0UpYy'
+access_token ='998580368-a8MKHoBNFKWmw8ypMgddlcdpc3OzmUkzFMrk7rMH'
+access_secret='ZaAvPc02M2W7ARg9jkCYg4RRgnyv23PkwJ6YqTwcJgbHv'
 
 #sql setting
 conf = SparkConf() \
@@ -453,10 +456,11 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
         
                 print(sentiment)
                 readDF = spark.createDataFrame([
-                    ( msg['text'], sentiment)
+                    ( msg['extended_tweet']['full_text'], sentiment)
                     ],
                     ['content', 'sentiment']
                 )
+
            
                 print(msg['extended_tweet']['full_text'])
             else:
@@ -476,7 +480,7 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
                     ],
                     ['content', 'sentiment']
                 )
-
+                print(msg['user']['name'])
                 print(msg['text'])
             
             global senPoscnt
@@ -550,7 +554,7 @@ class TweetsListener(StreamListener):  #클라이언트 소켓을 받음
             candiTblRenew()
 
             sentiTblRenew() 
-
+            
             # oriTblRenew()
 
             if(len(kmeans_list) > 10 ):

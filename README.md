@@ -44,6 +44,7 @@ Encore Playdata Bigdata Engineer - Mini Project 03
 
 ### 📂설치 파일 및 버전
 - Spring Boot 2.5.9 version
+- Spring Tool Suite 3.9.14 version
 - Python 3.7 version
 - MySQL 8.0.27 version
 - Hadoop 3.2.2 version

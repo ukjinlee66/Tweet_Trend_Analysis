@@ -1,6 +1,6 @@
 # Tweet_Trend_Analysis
 
-Encore Playdata Bigdata Engineer - Mini Project 01
+Encore Playdata Bigdata Engineer - Mini Project 03
 
 <p align="center">
 <img src="/asset/Tweet_Trend_Analysis.gif" width="600" height="400" >
